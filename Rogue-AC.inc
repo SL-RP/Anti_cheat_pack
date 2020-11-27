@@ -102,9 +102,8 @@
 static s_playerWarnings[MAX_PLAYERS];
 #define MAX_WARNS_AC 3 //Max warns before kick in severe case 1
 
-
-forward CallLocalFunction("OnPlayerViolate", "iiiis", playerid, severity, violationCode, const violationName[]);
-public CallLocalFunction("OnPlayerViolate", "iiiis", playerid, severity, violationCode, const violationName[])
+forward OnPlayerViolate(playerid, severity, violationCode, const violationName[]);
+public OnPlayerViolate(playerid, severity, violationCode, const violationName[])
 {
 	new acString[128], name[MAX_PLAYER_NAME];
 	GetPlayerName(playerid, name, sizeof name);
