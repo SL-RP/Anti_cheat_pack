@@ -103,18 +103,18 @@ static s_playerWarnings[MAX_PLAYERS];
 #define MAX_WARNS_AC 3 //Max warns before kick in severe case 1
 
 
-forward OnPlayerViolate(playerid, severity, violationCode, const violationName[]);
-public OnPlayerViolate(playerid, severity, violationCode, const violationName[])
+forward CallLocalFunction("OnPlayerViolate", "iiiis", playerid, severity, violationCode, const violationName[]);
+public CallLocalFunction("OnPlayerViolate", "iiiis", playerid, severity, violationCode, const violationName[])
 {
 	new acString[128], name[MAX_PLAYER_NAME];
 	GetPlayerName(playerid, name, sizeof name);
-	
+
 	switch(severity)
 	{
 		case SEVERITY_CASE_ONE:
 		{
 			if(s_playerWarnings[playerid] < MAX_WARNS_AC) s_playerWarnings[playerid]++;
-			else 
+			else
 			{
 				format(acString, sizeof acString, "Player %s was kicked after 3 warnings, reason: Code violation #%d", name, violationCode);
 				Kick(playerid);
@@ -140,79 +140,79 @@ public OnPlayerViolate(playerid, severity, violationCode, const violationName[])
 
 public OnPlayerFakeKill(playerid, spoofedid, spoofedreason, faketype)
 {
-	OnPlayerViolate(playerid, SEVERITY_CASE_TWO, VIOLATION_CODE_FAKEKILL, "Fake killing");
+	CallLocalFunction("OnPlayerViolate", "iiiis", playerid, SEVERITY_CASE_TWO, VIOLATION_CODE_FAKEKILL, "Fake killing");
 	return 1;
 }
 
 public OnPlayerFakeConnect(playerid)
 {
-	OnPlayerViolate(playerid, SEVERITY_CASE_TWO, VIOLATION_CODE_FAKECONNECT, "Fake connect");
+	CallLocalFunction("OnPlayerViolate", "iiiis", playerid, SEVERITY_CASE_TWO, VIOLATION_CODE_FAKECONNECT, "Fake connect");
 	return 1;
 }
 
 public OnPlayerJetpackCheat(playerid)
 {
-	OnPlayerViolate(playerid, SEVERITY_CASE_THREE, VIOLATION_CODE_JETPACK, "Jetpack cheats");
+	CallLocalFunction("OnPlayerViolate", "iiiis", playerid, SEVERITY_CASE_THREE, VIOLATION_CODE_JETPACK, "Jetpack cheats");
 	return 1;
 }
 
 public OnPlayerGodmode(playerid, gmtype)
 {
-	OnPlayerViolate(playerid, SEVERITY_CASE_TWO, VIOLATION_CODE_GODMODE, "Godmode cheats");
+	CallLocalFunction("OnPlayerViolate", "iiiis", playerid, SEVERITY_CASE_TWO, VIOLATION_CODE_GODMODE, "Godmode cheats");
 	return 1;
 }
 
 public OnPlayerSpamChat(playerid)
 {
-	OnPlayerViolate(playerid, SEVERITY_CASE_ONE, VIOLATION_CODE_CHATSPAM, "Chat spamming");
+	CallLocalFunction("OnPlayerViolate", "iiiis", playerid, SEVERITY_CASE_ONE, VIOLATION_CODE_CHATSPAM, "Chat spamming");
 	return 1;
 }
 
 public OnPlayerGunCheat(playerid, weaponid, ammo, hacktype)
 {
-	OnPlayerViolate(playerid, SEVERITY_CASE_TWO, VIOLATION_CODE_WEPHACKS, "Weapon cheats");
+	CallLocalFunction("OnPlayerViolate", "iiiis", playerid, SEVERITY_CASE_TWO, VIOLATION_CODE_WEPHACKS, "Weapon cheats");
 	return 1;
 }
 
 public OnPlayerSpeedCheat(playerid, speedtype)
 {
-	OnPlayerViolate(playerid, SEVERITY_CASE_TWO, VIOLATION_CODE_SPEEDING, "Speed cheats");
+	CallLocalFunction("OnPlayerViolate", "iiiis", playerid, SEVERITY_CASE_TWO, VIOLATION_CODE_SPEEDING, "Speed cheats");
 	return 1;
 }
 
 public OnPlayerBreakAir(playerid, breaktype)
 {
-	OnPlayerViolate(playerid, SEVERITY_CASE_TWO, VIOLATION_CODE_AIRBRAKE, "Airbrake");
+	CallLocalFunction("OnPlayerViolate", "iiiis", playerid, SEVERITY_CASE_TWO, VIOLATION_CODE_AIRBRAKE, "Airbrake");
 	return 1;
 }
 
 public OnPlayerSpamCars(playerid, number)
 {
-	OnPlayerViolate(playerid, SEVERITY_CASE_THREE, VIOLATION_CODE_CARSPAM, "Car spam");
+	CallLocalFunction("OnPlayerViolate", "iiiis", playerid, SEVERITY_CASE_THREE, VIOLATION_CODE_CARSPAM, "Car spam");
 	return 1;
 }
 
 public OnPlayerCarTroll(playerid, vehicleid, trolledid, trolltype)
 {
-	OnPlayerViolate(playerid, SEVERITY_CASE_TWO, VIOLATION_CODE_CARTROLL, "Car troll");
+	CallLocalFunction("OnPlayerViolate", "iiiis", playerid, SEVERITY_CASE_TWO, VIOLATION_CODE_CARTROLL, "Car troll");
 	return 1;
 }
 
 public OnPlayerCashCheat(playerid, oldcash, newcash, amount)
 {
-	OnPlayerViolate(playerid, SEVERITY_CASE_TWO, VIOLATION_CODE_MONEYHACK, "Cash cheats");
+	CallLocalFunction("OnPlayerViolate", "iiiis", playerid, SEVERITY_CASE_TWO, VIOLATION_CODE_MONEYHACK, "Cash cheats");
 	return 1;
 }
 
 public OnPlayerCarSwing(playerid, vehicleid)
 {
-	OnPlayerViolate(playerid, SEVERITY_CASE_TWO, VIOLATION_CODE_CARSWING, "Car swing");
+	CallLocalFunction("OnPlayerViolate", "iiiis", playerid, SEVERITY_CASE_TWO, VIOLATION_CODE_CARSWING, "Car swing");
 	return 1;
 }
 
 public OnPlayerParticleSpam(playerid, vehicleid)
 {
-	OnPlayerViolate(playerid, SEVERITY_CASE_THREE, VIOLATION_CODE_PARTICLESPAM, "Particle spamming");
+	CallLocalFunction("OnPlayerViolate", "iiiis", playerid, SEVERITY_CASE_THREE, VIOLATION_CODE_PARTICLESPAM, "Particle spamming");
 	return 1;
 }
 
@@ -220,26 +220,26 @@ public OnVehicleModEx(playerid, vehicleid, componentid, illegal)
 {
 	if(illegal)
 	{
-		OnPlayerViolate(playerid, SEVERITY_CASE_THREE, VIOLATION_CODE_INVALIDMODS, "Invalid mods");
+		CallLocalFunction("OnPlayerViolate", "iiiis", playerid, SEVERITY_CASE_THREE, VIOLATION_CODE_INVALIDMODS, "Invalid mods");
 	}
 	return 1;
 }
 
 public OnPlayerSlide(playerid, weaponid, speed)
 {
-	OnPlayerViolate(playerid, SEVERITY_CASE_ONE, VIOLATION_CODE_SLIDEBUG, "Slide bugging");
+	CallLocalFunction("OnPlayerViolate", "iiiis", playerid, SEVERITY_CASE_ONE, VIOLATION_CODE_SLIDEBUG, "Slide bugging");
 	return 1;
 }
 
 public OnPlayerLagout(playerid, lagtype, ping)
 {
-	OnPlayerViolate(playerid, SEVERITY_CASE_ONE, VIOLATION_CODE_LAGOUT, "Huge lag");
+	CallLocalFunction("OnPlayerViolate", "iiiis", playerid, SEVERITY_CASE_ONE, VIOLATION_CODE_LAGOUT, "Huge lag");
 	return 1;
 }
 
 public OnPlayerBugAttempt(playerid, bugcode)
 {
-	OnPlayerViolate(playerid, SEVERITY_CASE_TWO, VIOLATION_CODE_BUGATTEMPT, "Bug cheats");
+	CallLocalFunction("OnPlayerViolate", "iiiis", playerid, SEVERITY_CASE_TWO, VIOLATION_CODE_BUGATTEMPT, "Bug cheats");
 	return 1;
 }
 
